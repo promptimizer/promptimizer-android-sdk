@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
+
+def getPromptimizerProperty(String propName) {
+    def propsFile = rootProject.file('promptimizer.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "\"\""
+    }
+}
+
+android {
+    compileSdkVersion buildVersions.compileSdk
+    buildToolsVersion buildVersions.buildTools
+
+    defaultConfig {
+        applicationId "com.haystackreviews.promptimizer.app"
+        minSdkVersion buildVersions.minSdk
+        targetSdkVersion buildVersions.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "FIREBASE_APPLICATION_ID", getPromptimizerProperty("FIREBASE_APPLICATION_ID")
+        buildConfigField "String", "FIREBASE_API_KEY", getPromptimizerProperty("FIREBASE_API_KEY")
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation deps.kotlin.stdLib
+
+    implementation deps.coroutines.android
+
+    implementation deps.material
+
+    implementation deps.androidx.appCompat
+    implementation deps.androidx.coreExt
+    implementation deps.androidx.constraintlayout
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.junitExt
+    androidTestImplementation deps.test.espresso
+
+    implementation project(path: ':promptimizer')
+}

@@ -1,0 +1,3 @@
+include ':promptimizer'
+include ':app'
+rootProject.name = "Promptimizer Test App"
