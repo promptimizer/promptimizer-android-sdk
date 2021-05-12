@@ -54,7 +54,7 @@ See our [Rating Recipes documentation](https://github.com/promptimizer/promptimi
 It's often wise to trigger prompts once the user is "activated" within your app.
 You can track your own analytics events, or you can use the convenience method to track events specific to prompts.
 ```
-Promptimizer.track("high_score", mapOf("level" to 4, "score" to 870)
+Promptimizer.track("high_score", mapOf("level" to 4, "score" to 870))
 ```
 
 ## Price
