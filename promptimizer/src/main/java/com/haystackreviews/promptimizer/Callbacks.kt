@@ -1,5 +1,5 @@
 package com.haystackreviews.promptimizer
 
-typealias OnConfigure = (Error?) -> Unit
+typealias onComplete = (Error?) -> Unit
 typealias OnPromptReady = (Error?, Prompt) -> Unit
 typealias OnPromptComplete = (Error?, Prompt) -> Unit

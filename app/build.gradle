@@ -64,6 +64,9 @@ dependencies {
     implementation deps.androidx.coreExt
     implementation deps.androidx.constraintlayout
 
+    implementation deps.firebase.config
+    implementation deps.firebase.analytics
+
     testImplementation deps.test.junit
     androidTestImplementation deps.test.junitExt
     androidTestImplementation deps.test.espresso

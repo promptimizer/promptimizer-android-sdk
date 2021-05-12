@@ -3,13 +3,32 @@ package com.haystackreviews.promptimizer.app
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.haystackreviews.promptimizer.*
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.haystackreviews.promptimizer.Error
+import com.haystackreviews.promptimizer.Prompt
+import com.haystackreviews.promptimizer.Promptimizer
 import com.haystackreviews.promptimizer.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val firebaseRemoteConfig by lazy {
+        val remoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 10
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.fetchAndActivate()
+        remoteConfig
+    }
+
+    private val firebaseAnalytics by lazy {
+        Firebase.analytics
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,14 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.initializeSdkButton.setOnClickListener {
             Promptimizer.configure(
-                applicationContext,
-                PromptimizerOptions(
-                    FirebaseConfig(
-                        "promptimizer",
-                        BuildConfig.FIREBASE_APPLICATION_ID,
-                        BuildConfig.FIREBASE_API_KEY
-                    )
-                )
+                firebaseRemoteConfig,
+                firebaseAnalytics
             ) { error ->
                 if (error != null) {
                     Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()

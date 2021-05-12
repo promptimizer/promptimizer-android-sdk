@@ -1,5 +1,5 @@
 def buildVersions = [:]
-buildVersions.library = '0.0.1'
+buildVersions.library = '0.0.2'
 buildVersions.minSdk = 21
 buildVersions.compileSdk = 30
 buildVersions.targetSdk = 30
@@ -10,7 +10,7 @@ ext.deps = [:]
 def versions = [:]
 
 // Gradle
-versions.gradle = '4.1.3'
+versions.gradle = '4.2.0'
 
 // Kotlin
 versions.kotlin = '1.4.30'
@@ -103,6 +103,5 @@ ext.deps = deps
 static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.mavenCentral()
-    handler.jcenter()
 }
 ext.addRepos = this.&addRepos

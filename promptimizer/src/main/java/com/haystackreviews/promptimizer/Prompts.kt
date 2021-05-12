@@ -41,45 +41,47 @@ data class NoPrompt(
 
 fun showSentimentPrompt(
     context: Context,
+    backend: Promptimizer.Backend,
     sentimentPrompt: SentimentPrompt,
-    onPromptComplete: OnPromptComplete
+    onPromptComplete: OnPromptComplete?
 ) {
     MaterialAlertDialogBuilder(context)
         .setTitle(sentimentPrompt.title)
         .setNegativeButton(sentimentPrompt.negativeButton) { _, _ ->
-            trackFirebaseEvent(sentimentPromptNegativeButton)
-            onPromptComplete.invoke(null, sentimentPrompt)
+            backend.track(sentimentPromptNegativeButton)
+            onPromptComplete?.invoke(null, sentimentPrompt)
         }
         .setPositiveButton(sentimentPrompt.positiveButton) { _, _ ->
-            trackFirebaseEvent(sentimentPromptPositiveButton)
-            onPromptComplete.invoke(null, sentimentPrompt)
+            backend.track(sentimentPromptPositiveButton)
+            onPromptComplete?.invoke(null, sentimentPrompt)
         }
         .show()
-    trackFirebaseEvent(sentimentPromptDisplayed)
+    backend.track(sentimentPromptDisplayed)
 }
 
 fun showInAppRating(
     activity: Activity,
+    backend: Promptimizer.Backend,
     ratingPrompt: RatingPrompt,
-    onPromptComplete: OnPromptComplete
+    onPromptComplete: OnPromptComplete?
 ) {
     val appContext = activity.applicationContext
     val manager = ReviewManagerFactory.create(appContext)
     val request = manager.requestReviewFlow()
 
-    trackFirebaseEvent(startedRatingFlow)
+    backend.track(startedRatingFlow)
     request.addOnCompleteListener { result ->
         if (result.isSuccessful) {
             val reviewInfo = result.result
             val flow = manager.launchReviewFlow(activity, reviewInfo)
             flow.addOnCompleteListener {
-                trackFirebaseEvent(completedRatingFlow)
-                onPromptComplete.invoke(null, ratingPrompt)
+                backend.track(completedRatingFlow)
+                onPromptComplete?.invoke(null, ratingPrompt)
             }
         } else {
             val exception = result.exception
-            trackFirebaseEvent(inAppRatingFailure)
-            onPromptComplete.invoke(InAppRatingFailure(exception?.message ?: "In App Rating Failure"), ratingPrompt)
+            backend.track(inAppRatingFailure)
+            onPromptComplete?.invoke(InAppRatingFailure(exception?.message ?: "In App Rating Failure"), ratingPrompt)
         }
     }
 }
