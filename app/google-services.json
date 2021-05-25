@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1",
-    "project_id": "project_id",
-    "storage_bucket": "storage_bucket"
+    "project_number": "796328513984",
+    "project_id": "promptimizer",
+    "storage_bucket": "promptimizer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1",
+        "mobilesdk_app_id": "1:796328513984:android:0518798509c19aa5adb825",
         "android_client_info": {
           "package_name": "com.haystackreviews.promptimizer.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "client_id",
+          "client_id": "796328513984-sdmpf6gep8k7bg4mss087o590flm3qa4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "current_key"
+          "current_key": "AIzaSyBPXZNWh0kyqb8mMNcWMl8yf-1u6mXSfnI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "client_id",
+              "client_id": "796328513984-sdmpf6gep8k7bg4mss087o590flm3qa4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

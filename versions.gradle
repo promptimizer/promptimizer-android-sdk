@@ -1,48 +1,43 @@
 def buildVersions = [:]
-buildVersions.library = '0.0.2'
+buildVersions.library = '0.0.3'
 buildVersions.minSdk = 21
 buildVersions.compileSdk = 30
 buildVersions.targetSdk = 30
-buildVersions.buildTools = "29.0.3"
+buildVersions.buildTools = "30.0.2"
 ext.buildVersions = buildVersions
 
 ext.deps = [:]
 def versions = [:]
 
 // Gradle
-versions.gradle = '4.2.0'
+versions.gradle = '4.2.1'
 
 // Kotlin
-versions.kotlin = '1.4.30'
+versions.kotlin = '1.5.0'
 
 // Coroutines
-versions.coroutines = '1.4.2'
+versions.coroutines = '1.5.0'
 
 // Serialization
-versions.serialization = '1.2.0'
+versions.serialization = '1.2.1'
 
 // Material
-versions.material = '1.2.1'
+versions.material = '1.3.0'
 
 // AndroidX
-versions.appCompat = '1.2.0'
-versions.coreExt = '1.3.2'
+versions.appCompat = '1.3.0'
+versions.coreExt = '1.5.0'
 versions.constraintLayout = '2.0.4'
 
 // Google
 versions.googleServices = '4.3.5'
 
 // Play
-versions.play = '1.8.1'
-
-// Network
-versions.retrofit = '2.9.0'
-versions.okhttp = '4.9.0'
-versions.moshi = '1.9.3'
+versions.play = '1.10.0'
 
 // Firebase
-versions.firebaseConfig = '20.0.4'
-versions.firebaseAnalytics = '18.0.3'
+versions.firebaseConfig = '21.0.0'
+versions.firebaseAnalytics = '19.0.0'
 
 // Test
 versions.junit = '4.13.1'
@@ -84,7 +79,7 @@ google.plugin = "com.google.gms:google-services:$versions.googleServices"
 deps.google = google
 
 def play = [:]
-play.core = "com.google.android.play:core-ktx:$versions.play"
+play.core = "com.google.android.play:core:$versions.play"
 deps.play = play
 
 def firebase = [:]

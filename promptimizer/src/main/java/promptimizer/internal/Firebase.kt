@@ -1,20 +1,23 @@
-package com.haystackreviews.promptimizer
+package promptimizer.internal
 
 import android.os.Bundle
 import kotlinx.serialization.decodeFromString
+import promptimizer.internal.Json.format
+import promptimizer.Prompt
+import promptimizer.Promptimizer
 
-class Firebase(private val config: Promptimizer.Options.Firebase) : Promptimizer.Backend {
+internal class Firebase(private val config: Promptimizer.Options.Firebase) : Promptimizer.Backend {
 
     override suspend fun getPrompt(location: String): Prompt {
         val promptJson = config.remoteConfig.getString("promptToShow")
         return if (promptJson.isEmpty()) {
-            NoPrompt(location = location)
+            NoPrompt(location)
         } else {
             val decodedPrompt = format.decodeFromString<Prompt>(promptJson)
             if (location == decodedPrompt.location) {
                 decodedPrompt
             } else {
-                NoPrompt(location = location)
+                NoPrompt(location)
             }
         }
     }

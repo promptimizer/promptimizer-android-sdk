@@ -1,4 +1,4 @@
-package com.haystackreviews.promptimizer
+package promptimizer
 
 typealias onComplete = (Error?) -> Unit
 typealias OnPromptReady = (Error?, Prompt) -> Unit

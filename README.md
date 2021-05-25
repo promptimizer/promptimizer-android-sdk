@@ -28,7 +28,7 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    implementation 'com.github.promptimizer:promptimizer-android-sdk:0.0.2'
+    implementation 'com.github.promptimizer:promptimizer-android-sdk:0.0.3'
 }
 ```
 

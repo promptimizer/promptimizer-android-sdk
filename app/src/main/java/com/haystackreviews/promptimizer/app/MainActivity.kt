@@ -7,34 +7,29 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import com.haystackreviews.promptimizer.Error
-import com.haystackreviews.promptimizer.Prompt
-import com.haystackreviews.promptimizer.Promptimizer
+import com.promptimizer.Error
+import com.promptimizer.Prompt
+import com.promptimizer.Promptimizer
 import com.haystackreviews.promptimizer.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val firebaseRemoteConfig by lazy {
-        val remoteConfig = Firebase.remoteConfig
-        val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 10
-        }
-        remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.fetchAndActivate()
-        remoteConfig
-    }
-
-    private val firebaseAnalytics by lazy {
-        Firebase.analytics
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val firebaseRemoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 10
+        }
+        firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+        firebaseRemoteConfig.fetchAndActivate()
+
+        val firebaseAnalytics = Firebase.analytics
 
         binding.initializeSdkButton.setOnClickListener {
             Promptimizer.configure(
@@ -44,7 +39,8 @@ class MainActivity : AppCompatActivity() {
                 if (error != null) {
                     Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "SDK Configuration complete", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "SDK Configuration complete", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
