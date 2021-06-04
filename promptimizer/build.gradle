@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlinx-serialization'
 apply plugin: 'maven-publish'
 
 afterEvaluate {
@@ -54,10 +53,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation deps.kotlin.stdLib
-
-    implementation deps.coroutines.android
-
-    implementation deps.serialization.json
 
     implementation deps.material
 

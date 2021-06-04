@@ -8,6 +8,6 @@ internal class Logger {
     private val promptimizerTag = "Promptimizer"
 
     fun log(throwable: Throwable) {
-        Log.e(promptimizerTag, "Internal SDK exception caught. Please report this exception on Github.", throwable)
+        Log.e(promptimizerTag, "SDK exception caught and swallowed. Please report this stacktrace to https://github.com/promptimizer/promptimizer-android-sdk.", throwable)
     }
 }

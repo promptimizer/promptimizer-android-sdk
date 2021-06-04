@@ -1,5 +1,5 @@
 def buildVersions = [:]
-buildVersions.library = '0.0.3'
+buildVersions.library = '0.0.4'
 buildVersions.minSdk = 21
 buildVersions.compileSdk = 30
 buildVersions.targetSdk = 30
@@ -14,12 +14,6 @@ versions.gradle = '4.2.1'
 
 // Kotlin
 versions.kotlin = '1.5.0'
-
-// Coroutines
-versions.coroutines = '1.5.0'
-
-// Serialization
-versions.serialization = '1.2.1'
 
 // Material
 versions.material = '1.3.0'
@@ -56,15 +50,6 @@ def kotlin = [:]
 kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
 kotlin.stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 deps.kotlin = kotlin
-
-def coroutines = [:]
-coroutines.android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
-deps.coroutines = coroutines
-
-def serialization = [:]
-serialization.plugin = "org.jetbrains.kotlin:kotlin-serialization:$versions.kotlin"
-serialization.json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.serialization"
-deps.serialization = serialization
 
 deps.material = "com.google.android.material:material:$versions.material"
 

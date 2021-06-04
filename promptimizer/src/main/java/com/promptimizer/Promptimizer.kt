@@ -3,11 +3,9 @@ package com.promptimizer
 import android.app.Activity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.coroutines.*
 import com.promptimizer.internal.Event
 import com.promptimizer.internal.Firebase
 import com.promptimizer.internal.Logger
-import com.promptimizer.internal.NoPrompt
 import com.promptimizer.internal.PromptsImpl.showInAppRating
 import com.promptimizer.internal.PromptsImpl.showSentimentPrompt
 
@@ -21,7 +19,7 @@ object Promptimizer {
     }
 
     internal interface Backend {
-        suspend fun getPrompt(location: String): Prompt
+        fun getPrompt(location: String): Prompt
         fun track(event: Event)
     }
 
@@ -29,11 +27,7 @@ object Promptimizer {
 
     private var initialized = false
 
-    private val logger: Logger = Logger()
-
-    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        logger.log(exception)
-    }
+    private val logger: Logger by lazy { Logger() }
 
     fun configure(
         remoteConfig: FirebaseRemoteConfig,
@@ -57,7 +51,7 @@ object Promptimizer {
                 onConfigureCompleteListener?.invoke(null)
             } else {
                 when (options) {
-                    is Options.Firebase -> backend = Firebase(options)
+                    is Options.Firebase -> backend = Firebase(options, logger)
                 }
                 initialized = true
                 onConfigureCompleteListener?.invoke(null)
@@ -71,14 +65,10 @@ object Promptimizer {
     ) {
         catchExceptionsAndLog {
             if (!initialized) {
-                onPromptReady?.invoke(Error.SdkNotInitialized, NoPrompt(location))
+                onPromptReady?.invoke(Error.SdkNotInitialized, Prompt.None(location))
             } else {
-                CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
-                    val promptToShow = backend?.getPrompt(location) ?: NoPrompt(location)
-                    withContext(Dispatchers.Main) {
-                        onPromptReady?.invoke(null, promptToShow)
-                    }
-                }
+                val promptToShow = backend?.getPrompt(location) ?: Prompt.None(location)
+                onPromptReady?.invoke(null, promptToShow)
             }
         }
     }

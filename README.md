@@ -19,9 +19,9 @@ You can further experiment and optimize the prompts to only trigger after certai
 We even have some [rating recipes](https://github.com/promptimizer/promptimizer-android-sdk/wiki) you can try.
 
 ## Requirements
-Android minimum SDK 21+ (Android 5.0)
+Android minimum SDK 21+ (Android 5.0).
 
-[Firebase for Android](https://firebase.google.com/docs/android/setup) with [Remote Config](https://firebase.google.com/docs/remote-config) and (optionally) [Analytics](https://firebase.google.com/docs/analytics)
+[Firebase for Android](https://firebase.google.com/docs/android/setup) with [Remote Config](https://firebase.google.com/docs/remote-config) and (optionally) [Analytics](https://firebase.google.com/docs/analytics).
 
 ## Install
 ```
@@ -30,9 +30,10 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    implementation 'com.github.promptimizer:promptimizer-android-sdk:0.0.3'
+    implementation 'com.github.promptimizer:promptimizer-android-sdk:<latest-version>'
 }
 ```
+See the [latest release versions](https://github.com/promptimizer/promptimizer-android-sdk/releases).
 
 ## Setup
 Pass in your Firebase remote config and (optionally) your analytics.
@@ -41,7 +42,7 @@ Promptimizer.configure(firebaseRemoteConfig, firebaseAnalytics)
 ```
 
 ## Show a prompt
-Pick ideal locations to display a sentiment or rating prompt
+Pick ideal locations to display a sentiment or rating prompt.
 ```
 Promptimizer.getPrompt( “high_score_screen”) { prompt ->
   // You have full control over displaying a prompt or not

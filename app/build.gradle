@@ -56,8 +56,6 @@ dependencies {
 
     implementation deps.kotlin.stdLib
 
-    implementation deps.coroutines.android
-
     implementation deps.material
 
     implementation deps.androidx.appCompat

@@ -1,55 +1,37 @@
 package com.promptimizer.internal
 
-import androidx.annotation.Keep
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import com.promptimizer.Prompt
+import org.json.JSONObject
 
 internal object Json {
 
-    val format = Json {
-        serializersModule = SerializersModule {
-            polymorphic(Prompt::class, Prompt.serializer()) {
-                subclass(SentimentPromptJson::class, SentimentPromptJson.serializer())
-                subclass(RatingPromptJson::class, RatingPromptJson.serializer())
-                default { NoPromptJson.serializer() }
+    fun decodePrompt(promptJson: String, logger: Logger): Prompt {
+        return try {
+            val jsonObject = JSONObject(promptJson)
+            val locationKey = "location"
+            when (jsonObject.optString("type")) {
+                "sentiment" -> {
+                    val location = jsonObject.optString(locationKey)
+                    val title = jsonObject.optString("title")
+                    val positiveButton = jsonObject.optString("positive_button")
+                    val negativeButton = jsonObject.optString("negative_button")
+                    Prompt.Sentiment(location, title, positiveButton, negativeButton)
+                }
+                "rating" -> {
+                    val location = jsonObject.optString(locationKey)
+                    Prompt.Rating(location)
+                }
+                "none" -> {
+                    val location = jsonObject.optString(locationKey)
+                    Prompt.None(location)
+                }
+                else -> {
+                    Prompt.None(location = "")
+                }
             }
+        } catch (throwable: Throwable) {
+            logger.log(throwable)
+            Prompt.None(location = "")
         }
-
     }
-
-    @Keep
-    @Serializable
-    @SerialName("sentiment")
-    data class SentimentPromptJson(
-        @SerialName("location")
-        override val location: String,
-        @SerialName("title")
-        override val title: String,
-        @SerialName("positive_button")
-        override val positiveButton: String,
-        @SerialName("negative_button")
-        override val negativeButton: String,
-    ) : Prompt.Sentiment()
-
-    @Keep
-    @Serializable
-    @SerialName("rating")
-    data class RatingPromptJson(
-        @SerialName("location")
-        override val location: String
-    ) : Prompt.Rating()
-
-    @Keep
-    @Serializable
-    @SerialName("none")
-    data class NoPromptJson(
-        @SerialName("location")
-        override val location: String
-    ) : Prompt.None()
-
 }

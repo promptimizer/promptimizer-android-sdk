@@ -9,8 +9,6 @@ import com.promptimizer.OnPromptComplete
 import com.promptimizer.Prompt
 import com.promptimizer.Promptimizer
 
-internal data class NoPrompt(override val location: String) : Prompt.None()
-
 internal object PromptsImpl {
 
     fun showSentimentPrompt(

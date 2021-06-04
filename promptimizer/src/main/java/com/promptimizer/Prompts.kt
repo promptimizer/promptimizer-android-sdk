@@ -1,25 +1,16 @@
 package com.promptimizer
 
-import androidx.annotation.Keep
-import kotlinx.serialization.Serializable
-
-@Keep
-@Serializable
 sealed class Prompt {
     abstract val location: String
 
-    abstract class Sentiment : Prompt() {
-        abstract override val location: String
-        abstract val title: String
-        abstract val positiveButton: String
-        abstract val negativeButton: String
-    }
+    data class Sentiment(
+        override val location: String,
+        val title: String,
+        val positiveButton: String,
+        val negativeButton: String
+    ) : Prompt()
 
-    abstract class Rating : Prompt() {
-        abstract override val location: String
-    }
+    data class Rating(override val location: String) : Prompt()
 
-    abstract class None : Prompt() {
-        abstract override val location: String
-    }
+    data class None(override val location: String) : Prompt()
 }
